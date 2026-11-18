@@ -1,90 +1,136 @@
+const { Categorie } = require('../models');
 
-const Categorie = require('../models/Categorie');
-
-// GET - Afficher toutes les catégories
-exports.getAllCategories = async (req, res) => {
+// Afficher toutes les catégories
+exports.afficherCategories = async (req, res) => {
     try {
-        const categories = await Categorie.findAll();
-        res.status(200).json(categories);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        const page = parseInt(req.query.page, 10) || 1;
+        const limite = parseInt(req.query.limite, 10) || 10;
+
+        if (page < 1 || limite < 1 || limite > 100) {
+            return res.status(400).json({
+                message: 'Les paramètres de pagination sont invalides'
+            });
+        }
+
+        const resultat = await Categorie.findAndCountAll({
+            limit: limite,
+            offset: (page - 1) * limite,
+            order: [['id_categorie', 'ASC']]
+        });
+
+        res.status(200).json({
+            total: resultat.count,
+            page,
+            limite,
+            categories: resultat.rows
+        });
+    } catch (erreur) {
+        res.status(500).json({
+            message: 'Erreur lors de l affichage des catégories',
+            erreur: erreur.message
+        });
     }
 };
 
-// GET - Afficher une catégorie par ID
-exports.getCategorieById = async (req, res) => {
+// Afficher une catégorie par son ID
+exports.afficherCategorie = async (req, res) => {
     try {
         const categorie = await Categorie.findByPk(req.params.id);
 
         if (!categorie) {
-            return res.status(404).json({ message: 'Catégorie introuvable' });
+            return res.status(404).json({
+                message: 'Catégorie introuvable'
+            });
         }
 
         res.status(200).json(categorie);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (erreur) {
+        res.status(500).json({
+            message: 'Erreur lors de la recherche de la catégorie',
+            erreur: erreur.message
+        });
     }
 };
 
-// POST - Créer une catégorie
-exports.createCategorie = async (req, res) => {
+// Ajouter une catégorie
+exports.ajouterCategorie = async (req, res) => {
     try {
         const { nom, description } = req.body;
 
-        if (typeof nom !== 'string' || !nom.trim()) {
-            return res.status(400).json({ message: 'Le nom est obligatoire' });
+        if (!nom || !nom.trim()) {
+            return res.status(400).json({
+                message: 'Le nom de la catégorie est obligatoire'
+            });
         }
 
-        const categorie = await Categorie.create({
-            nom: nom.trim(),
+        const nouvelleCategorie = await Categorie.create({
+            nom,
             description
         });
 
-        res.status(201).json(categorie);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(201).json(nouvelleCategorie);
+    } catch (erreur) {
+        res.status(500).json({
+            message: 'Erreur lors de l ajout de la catégorie',
+            erreur: erreur.message
+        });
     }
 };
 
-// PUT - Modifier une catégorie
-exports.updateCategorie = async (req, res) => {
+// Modifier une catégorie
+exports.modifierCategorie = async (req, res) => {
     try {
         const categorie = await Categorie.findByPk(req.params.id);
 
         if (!categorie) {
-            return res.status(404).json({ message: 'Catégorie introuvable' });
+            return res.status(404).json({
+                message: 'Catégorie introuvable'
+            });
         }
 
         const { nom, description } = req.body;
 
-        if (nom !== undefined && (typeof nom !== 'string' || !nom.trim())) {
-            return res.status(400).json({ message: 'Le nom ne peut pas être vide' });
+        if (nom !== undefined && !nom.trim()) {
+            return res.status(400).json({
+                message: 'Le nom de la catégorie ne peut pas être vide'
+            });
         }
 
         await categorie.update({
-            ...(nom !== undefined && { nom: nom.trim() }),
-            ...(description !== undefined && { description })
+            nom: nom !== undefined ? nom : categorie.nom,
+            description: description !== undefined
+                ? description : categorie.description
         });
 
         res.status(200).json(categorie);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (erreur) {
+        res.status(500).json({
+            message: 'Erreur lors de la modification de la catégorie',
+            erreur: erreur.message
+        });
     }
 };
 
-// DELETE - Supprimer une catégorie
-exports.deleteCategorie = async (req, res) => {
+// Supprimer une catégorie
+exports.supprimerCategorie = async (req, res) => {
     try {
         const categorie = await Categorie.findByPk(req.params.id);
 
         if (!categorie) {
-            return res.status(404).json({ message: 'Catégorie introuvable' });
+            return res.status(404).json({
+                message: 'Catégorie introuvable'
+            });
         }
 
         await categorie.destroy();
 
-        res.status(200).json({ message: 'Catégorie supprimée avec succès' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(200).json({
+            message: 'Catégorie supprimée avec succès'
+        });
+    } catch (erreur) {
+        res.status(500).json({
+            message: 'Erreur lors de la suppression de la catégorie',
+            erreur: erreur.message
+        });
     }
 };
