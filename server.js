@@ -8,10 +8,12 @@ const declarationRoutes = require('./routes/declarationRoutes');
 const objetRoutes = require('./routes/objetRoutes');
 const lieuRoutes = require('./routes/lieuRoutes');
 const reclamationRoutes = require('./routes/reclamationRoutes');
+const categorieRoutes = require('./routes/categorieRoutes');
 
 const app = express();
 const PORT = 3001;
 
+// Lire les données JSON
 app.use(express.json());
 
 // Routes API
@@ -21,6 +23,7 @@ app.use('/api/declarations', declarationRoutes);
 app.use('/api/objets', objetRoutes);
 app.use('/api/lieux', lieuRoutes);
 app.use('/api/reclamations', reclamationRoutes);
+app.use('/api/categories', categorieRoutes);
 
 // Route d'accueil
 app.get('/', (req, res) => {
