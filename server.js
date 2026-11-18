@@ -9,12 +9,16 @@ const objetRoutes = require('./routes/objetRoutes');
 const lieuRoutes = require('./routes/lieuRoutes');
 const reclamationRoutes = require('./routes/reclamationRoutes');
 const categorieRoutes = require('./routes/categorieRoutes');
+const photoObjetRoutes = require('./routes/photoObjetRoutes');
 
 const app = express();
 const PORT = 3001;
 
 // Lire les données JSON
 app.use(express.json());
+
+// Rendre les images du dossier uploads accessibles
+app.use('/uploads', express.static('uploads'));
 
 // Routes API
 app.use('/api/utilisateurs', utilisateurRoutes);
@@ -24,6 +28,7 @@ app.use('/api/objets', objetRoutes);
 app.use('/api/lieux', lieuRoutes);
 app.use('/api/reclamations', reclamationRoutes);
 app.use('/api/categories', categorieRoutes);
+app.use('/api/photos', photoObjetRoutes);
 
 // Route d'accueil
 app.get('/', (req, res) => {
