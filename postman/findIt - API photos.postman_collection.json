@@ -64,13 +64,21 @@
         "method": "POST",
         "header": [],
         "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"id_objet\": 1,\r\n    \"chemin_fichier\": \"uploads/iphone-noir.jpg\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "id_objet",
+              "value": "1",
+              "type": "text"
+            },
+            {
+              "key": "image",
+              "type": "file",
+              "src": [
+                "/C:/Users/widad/OneDrive/Images/Screenshots/{090BC051-5216-481D-BF14-89F9E5B86E3C}.png"
+              ]
             }
-          }
+          ]
         },
         "url": {
           "raw": "http://localhost:3000/api/photos",
@@ -93,16 +101,19 @@
         "method": "PUT",
         "header": [],
         "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"chemin_fichier\": \"uploads/iphone-noir-face.jpg\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "image",
+              "type": "file",
+              "src": [
+                "/C:/Users/widad/OneDrive/Images/Screenshots/{090BC051-5216-481D-BF14-89F9E5B86E3C}.png"
+              ]
             }
-          }
+          ]
         },
         "url": {
-          "raw": "http://localhost:3000/api/photos/1",
+          "raw": "http://localhost:3000/api/photos/2",
           "protocol": "http",
           "host": [
             "localhost"
@@ -111,7 +122,7 @@
           "path": [
             "api",
             "photos",
-            "1"
+            "2"
           ]
         }
       },
