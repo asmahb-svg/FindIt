@@ -97,18 +97,28 @@
       "response": []
     },
     {
-      "name": "DELETE - Supprimer un objet",
+      "name": "GET - Afficher un objet",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "http://localhost:3000/api/objets/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "objets",
+            "1"
+          ]
         }
       },
       "response": []
     },
     {
-      "name": "GET - Afficher un objet",
+      "name": "DELETE - Supprimer un objet",
       "request": {
         "method": "DELETE",
         "header": [],
