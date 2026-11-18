@@ -1,13 +1,17 @@
-
 const express = require('express');
 const router = express.Router();
 
 const objetController = require('../controllers/ObjetController');
+const {
+    validerId,
+    validerAjoutObjet,
+    validerModifObjet
+} = require('../middlewares/validation');
 
 router.get('/', objetController.afficherObjets);
-router.get('/:id', objetController.afficherObjet);
-router.post('/', objetController.ajouterObjet);
-router.put('/:id', objetController.modifierObjet);
-router.delete('/:id', objetController.supprimerObjet);
+router.get('/:id', validerId, objetController.afficherObjet);
+router.post('/', validerAjoutObjet, objetController.ajouterObjet);
+router.put('/:id', validerId, validerModifObjet, objetController.modifierObjet);
+router.delete('/:id', validerId, objetController.supprimerObjet);
 
 module.exports = router;

@@ -69,3 +69,43 @@ exports.validerModifPhoto = [
         .isInt({ min: 1 }).withMessage('L id de l objet doit être un nombre entier positif'),
     verifierErreurs
 ];
+
+// ===== OBJET =====
+
+// Ajouter un objet
+exports.validerAjoutObjet = [
+    body('id_categorie')
+        .notEmpty().withMessage('La catégorie est obligatoire')
+        .bail()
+        .isInt({ min: 1 }).withMessage('L id de la catégorie doit être un nombre entier positif'),
+    body('nom')
+        .trim()
+        .notEmpty().withMessage('Le nom de l objet est obligatoire')
+        .isLength({ max: 150 }).withMessage('Le nom ne doit pas dépasser 150 caractères'),
+    body('date_creation')
+        .optional()
+        .isISO8601().withMessage('La date doit être au format AAAA-MM-JJ'),
+    body('statut')
+        .optional()
+        .isLength({ max: 30 }).withMessage('Le statut ne doit pas dépasser 30 caractères'),
+    verifierErreurs
+];
+
+// Modifier un objet
+exports.validerModifObjet = [
+    body('id_categorie')
+        .optional()
+        .isInt({ min: 1 }).withMessage('L id de la catégorie doit être un nombre entier positif'),
+    body('nom')
+        .optional()
+        .trim()
+        .notEmpty().withMessage('Le nom de l objet ne peut pas être vide')
+        .isLength({ max: 150 }).withMessage('Le nom ne doit pas dépasser 150 caractères'),
+    body('date_creation')
+        .optional()
+        .isISO8601().withMessage('La date doit être au format AAAA-MM-JJ'),
+    body('statut')
+        .optional()
+        .isLength({ max: 30 }).withMessage('Le statut ne doit pas dépasser 30 caractères'),
+    verifierErreurs
+];
