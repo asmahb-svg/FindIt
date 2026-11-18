@@ -1,0 +1,6 @@
+$kind: http-request
+name: DELETE - Supprimer utilisateur.
+description: ""
+url: http://localhost:3000/api/utilisateurs/16
+method: DELETE
+order: 2000
