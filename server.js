@@ -13,6 +13,9 @@ app.use('/api/utilisateurs', require('./routes/utilisateurRoutes'));
 // API CATEGORIE - Widad
 app.use('/api/categories', require('./routes/categorieRoutes'));
 
+// API PHOTO OBJET - Widad
+app.use('/api/photos', require('./routes/photoObjetRoutes'));
+
 // Route d'accueil
 app.get('/', (req, res) => {
     res.send('Bienvenue sur l API FindIt !');
