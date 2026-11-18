@@ -1,6 +1,15 @@
 const express = require('express');
 const sequelize = require('./config/database');
 
+const utilisateurRoutes = require('./routes/utilisateurRoutes');
+const roleRoutes = require('./routes/roleRoutes');
+const declarationRoutes = require('./routes/declarationRoutes');
+const objetRoutes = require('./routes/objetRoutes');
+const lieuRoutes = require('./routes/lieuRoutes');
+const reclamationRoutes = require('./routes/reclamationRoutes');
+const categorieRoutes = require('./routes/categorieRoutes');
+const photoObjetRoutes = require('./routes/photoObjetRoutes');
+
 const app = express();
 const PORT = 3000;
 
@@ -10,21 +19,21 @@ app.use(express.json());
 // Rendre les images du dossier uploads accessibles
 app.use('/uploads', express.static('uploads'));
 
-// API UTILISATEUR - Asma
-app.use('/api/utilisateurs', require('./routes/utilisateurRoutes'));
-
-// API CATEGORIE - Widad
-app.use('/api/categories', require('./routes/categorieRoutes'));
-
-// API PHOTO OBJET - Widad
-app.use('/api/photos', require('./routes/photoObjetRoutes'));
+// Routes API
+app.use('/api/utilisateurs', utilisateurRoutes);
+app.use('/api/roles', roleRoutes);
+app.use('/api/declarations', declarationRoutes);
+app.use('/api/objets', objetRoutes);
+app.use('/api/lieux', lieuRoutes);
+app.use('/api/reclamations', reclamationRoutes);
+app.use('/api/categories', categorieRoutes);
+app.use('/api/photos', photoObjetRoutes);
 
 // Route d'accueil
 app.get('/', (req, res) => {
     res.send('Bienvenue sur l API FindIt !');
 });
 
-// Démarrer le serveur
 async function demarrerServeur() {
     try {
         await sequelize.authenticate();

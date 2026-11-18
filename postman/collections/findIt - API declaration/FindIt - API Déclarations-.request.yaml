@@ -1,0 +1,6 @@
+$kind: http-request
+name: FindIt - API Déclarations.
+description: ""
+url: http://localhost:3001/api/declarations
+method: GET
+order: 1000
