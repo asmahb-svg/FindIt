@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: http://localhost:3001/api/lieux/1
+method: DELETE
+order: 6000

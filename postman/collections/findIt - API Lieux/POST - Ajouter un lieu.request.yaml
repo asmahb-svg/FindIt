@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: http://localhost:3001/api/lieux
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"nom\": \"Bibliothèque municipale\",\r
+
+    \    \"adresse\": \"170 rue de la Bibliothèque\",\r
+
+    \    \"ville\": \"Gatineau\",\r
+
+    \    \"code_postal\": \"J8X 3Y9\"\r
+
+    }"
+order: 1000

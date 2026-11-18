@@ -1,21 +1,32 @@
+
 const express = require('express');
 const sequelize = require('./config/database');
 
-const app = express();
-const PORT = 3000;
+const utilisateurRoutes = require('./routes/utilisateurRoutes');
+const roleRoutes = require('./routes/roleRoutes');
+const declarationRoutes = require('./routes/declarationRoutes');
+const objetRoutes = require('./routes/objetRoutes');
+const lieuRoutes = require('./routes/lieuRoutes');
+const reclamationRoutes = require('./routes/reclamationRoutes');
 
-// Lire les données JSON envoyées par les utilisateurs
+const app = express();
+const PORT = 3001;
+
 app.use(express.json());
 
-// Routes des utilisateurs
-app.use('/api/utilisateurs', require('./routes/utilisateurRoutes'));
+// Routes API
+app.use('/api/utilisateurs', utilisateurRoutes);
+app.use('/api/roles', roleRoutes);
+app.use('/api/declarations', declarationRoutes);
+app.use('/api/objets', objetRoutes);
+app.use('/api/lieux', lieuRoutes);
+app.use('/api/reclamations', reclamationRoutes);
 
 // Route d'accueil
 app.get('/', (req, res) => {
     res.send('Bienvenue sur l API FindIt !');
 });
 
-// Démarrer le serveur
 async function demarrerServeur() {
     try {
         await sequelize.authenticate();

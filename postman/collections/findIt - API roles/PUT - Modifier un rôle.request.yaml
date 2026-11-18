@@ -1,0 +1,14 @@
+$kind: http-request
+description: ""
+url: http://localhost:3001/api/roles/1
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \    \"titre\": \"Administrateur principal\",\r
+
+    \    \"description\": \"Gestion complète de FindIt\"\r
+
+    }"
+order: 3000
