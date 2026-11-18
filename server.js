@@ -7,6 +7,9 @@ const PORT = 3000;
 // Lire les données JSON
 app.use(express.json());
 
+// Rendre les images du dossier uploads accessibles
+app.use('/uploads', express.static('uploads'));
+
 // API UTILISATEUR - Asma
 app.use('/api/utilisateurs', require('./routes/utilisateurRoutes'));
 
