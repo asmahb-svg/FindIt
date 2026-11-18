@@ -4,11 +4,14 @@ const sequelize = require('./config/database');
 const app = express();
 const PORT = 3000;
 
-// Lire les données JSON envoyées par les utilisateurs
+// Lire les données JSON
 app.use(express.json());
 
-// Routes des utilisateurs
+// API UTILISATEUR - Asma
 app.use('/api/utilisateurs', require('./routes/utilisateurRoutes'));
+
+// API CATEGORIE - Widad
+app.use('/api/categories', require('./routes/categorieRoutes'));
 
 // Route d'accueil
 app.get('/', (req, res) => {
