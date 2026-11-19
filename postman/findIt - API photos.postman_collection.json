@@ -1,0 +1,153 @@
+{
+  "info": {
+    "_postman_id": "c86c953b-d6eb-406b-b168-138581ce58c4",
+    "name": "findIt - API photos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60278785",
+    "_collection_link": "https://go.postman.co/collection/60278785-c86c953b-d6eb-406b-b168-138581ce58c4?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET - Afficher toutes les photos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/photos?page=1&limite=10",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "photos"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limite",
+              "value": "10"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Afficher une photo",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/photos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "photos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST - Ajouter une photo",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "id_objet",
+              "value": "1",
+              "type": "text"
+            },
+            {
+              "key": "image",
+              "type": "file",
+              "src": [
+                "/C:/Users/widad/OneDrive/Images/Screenshots/{090BC051-5216-481D-BF14-89F9E5B86E3C}.png"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/photos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "photos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT - Modifier une photo",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "image",
+              "type": "file",
+              "src": [
+                "/C:/Users/widad/OneDrive/Images/Screenshots/{090BC051-5216-481D-BF14-89F9E5B86E3C}.png"
+              ]
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/photos/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "photos",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE - Supprimer une photo",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/photos/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "photos",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

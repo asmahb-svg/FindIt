@@ -1,0 +1,14 @@
+$kind: http-request
+description: ""
+url: http://localhost:3001/api/roles
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"titre\": \"Administrateur\",\r
+
+    \    \"description\": \"Gestion complète de l'application\"\r
+
+    }"
+order: 2000

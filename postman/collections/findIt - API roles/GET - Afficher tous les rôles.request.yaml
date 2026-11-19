@@ -1,0 +1,8 @@
+$kind: http-request
+description: ""
+url: http://localhost:3001/api/roles
+method: GET
+body:
+  type: json
+  content: ""
+order: 4000

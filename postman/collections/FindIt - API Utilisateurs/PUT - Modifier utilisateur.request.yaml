@@ -1,0 +1,18 @@
+$kind: http-request
+description: ""
+url: http://localhost:3000/api/utilisateurs/19
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \  \"nom\": \"TestModifie\",\r
+
+    \  \"prenom\": \"Etudiant\",\r
+
+    \  \"email\": \"test.postman2026b@example.com\",\r
+
+    \  \"telephone\": \"5145559999\"\r
+
+    }"
+order: 4000
