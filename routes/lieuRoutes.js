@@ -3,14 +3,15 @@ const express = require('express');
 const router = express.Router();
 
 const lieuController = require('../controllers/LieuController');
+const verifierToken = require('../middlewares/auth');
 
 console.log('Fichier lieuRoutes chargé');
 
-// Routes pour la gestion des lieux
-router.get('/', lieuController.afficherLieux);
-router.get('/:id', lieuController.afficherLieu);
-router.post('/', lieuController.ajouterLieu);
-router.put('/:id', lieuController.modifierLieu);
-router.delete('/:id', lieuController.supprimerLieu);
+// Routes protégées par JWT
+router.get('/', verifierToken, lieuController.afficherLieux);
+router.get('/:id', verifierToken, lieuController.afficherLieu);
+router.post('/', verifierToken, lieuController.ajouterLieu);
+router.put('/:id', verifierToken, lieuController.modifierLieu);
+router.delete('/:id', verifierToken, lieuController.supprimerLieu);
 
 module.exports = router;

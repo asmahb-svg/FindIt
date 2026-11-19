@@ -3,14 +3,16 @@ const express = require('express');
 const router = express.Router();
 
 const roleController = require('../controllers/RoleController');
+const verifierToken = require('../middlewares/auth');
+const autoriserRole = require('../middlewares/autorisation');
 
 console.log('Fichier roleRoutes chargé');
 
-// Routes pour la gestion des rôles
-router.get('/', roleController.afficherRoles);
-router.get('/:id', roleController.afficherRole);
-router.post('/', roleController.ajouterRole);
-router.put('/:id', roleController.modifierRole);
-router.delete('/:id', roleController.supprimerRole);
+// Routes réservées aux administrateurs
+router.get('/', verifierToken, autoriserRole('Administrateur'), roleController.afficherRoles);
+router.get('/:id', verifierToken, autoriserRole('Administrateur'), roleController.afficherRole);
+router.post('/', verifierToken, autoriserRole('Administrateur'), roleController.ajouterRole);
+router.put('/:id', verifierToken, autoriserRole('Administrateur'), roleController.modifierRole);
+router.delete('/:id', verifierToken, autoriserRole('Administrateur'), roleController.supprimerRole);
 
 module.exports = router;
