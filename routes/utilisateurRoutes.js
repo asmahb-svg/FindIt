@@ -1,21 +1,58 @@
+
 const express = require('express');
 const router = express.Router();
 
 const utilisateurController = require('../controllers/UtilisateurController');
+const verifierToken = require('../middlewares/auth');
 
-// Afficher tous les utilisateurs
-router.get('/', utilisateurController.afficherUtilisateurs);
+const {
+    validerId,
+    validerAjoutUtilisateur,
+    validerModifUtilisateur,
+    validerConnexion
+} = require('../middlewares/validation');
 
-// Afficher un utilisateur par son ID
-router.get('/:id', utilisateurController.afficherUtilisateur);
+// Inscription
+router.post(
+    '/',
+    validerAjoutUtilisateur,
+    utilisateurController.ajouterUtilisateur
+);
 
-// Ajouter un utilisateur
-router.post('/', utilisateurController.ajouterUtilisateur);
+// Connexion
+router.post(
+    '/login',
+    validerConnexion,
+    utilisateurController.connecterUtilisateur
+);
 
-// Modifier un utilisateur
-router.put('/:id', utilisateurController.modifierUtilisateur);
+// Routes protégées par JWT
+router.get(
+    '/',
+    verifierToken,
+    utilisateurController.afficherUtilisateurs
+);
 
-// Supprimer un utilisateur
-router.delete('/:id', utilisateurController.supprimerUtilisateur);
+router.get(
+    '/:id',
+    verifierToken,
+    validerId,
+    utilisateurController.afficherUtilisateur
+);
+
+router.put(
+    '/:id',
+    verifierToken,
+    validerId,
+    validerModifUtilisateur,
+    utilisateurController.modifierUtilisateur
+);
+
+router.delete(
+    '/:id',
+    verifierToken,
+    validerId,
+    utilisateurController.supprimerUtilisateur
+);
 
 module.exports = router;

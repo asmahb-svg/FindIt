@@ -1,6 +1,7 @@
 
 const { Utilisateur } = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Afficher tous les utilisateurs
 exports.afficherUtilisateurs = async (req, res) => {
@@ -92,13 +93,7 @@ exports.ajouterUtilisateur = async (req, res) => {
 
         res.status(500).json({
             message: 'Erreur lors de l’ajout de l’utilisateur',
-            erreur: erreur.message,
-            details: erreur.errors
-                ? erreur.errors.map(e => ({
-                    champ: e.path,
-                    message: e.message
-                }))
-                : []
+            erreur: erreur.message
         });
     }
 };
@@ -177,6 +172,66 @@ exports.supprimerUtilisateur = async (req, res) => {
     } catch (erreur) {
         res.status(500).json({
             message: 'Erreur lors de la suppression de l’utilisateur',
+            erreur: erreur.message
+        });
+    }
+};
+
+// Connecter un utilisateur avec JWT
+exports.connecterUtilisateur = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({
+                message: 'Email et mot de passe obligatoires'
+            });
+        }
+
+        const utilisateur = await Utilisateur.findOne({
+            where: { email }
+        });
+
+        if (!utilisateur) {
+            return res.status(401).json({
+                message: 'Email ou mot de passe incorrect'
+            });
+        }
+
+        const motDePasseValide = await bcrypt.compare(
+            password,
+            utilisateur.password
+        );
+
+        if (!motDePasseValide) {
+            return res.status(401).json({
+                message: 'Email ou mot de passe incorrect'
+            });
+        }
+
+        if (!process.env.JWT_SECRET) {
+            return res.status(500).json({
+                message: 'La clé secrète JWT est absente'
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                id_utilisateur: utilisateur.id_utilisateur,
+                email: utilisateur.email
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.status(200).json({
+            message: 'Connexion réussie',
+            token
+        });
+
+    } catch (erreur) {
+        res.status(500).json({
+            message: 'Erreur lors de la connexion',
             erreur: erreur.message
         });
     }
